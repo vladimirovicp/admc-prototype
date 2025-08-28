@@ -46,16 +46,18 @@ export function createTable(tableData) {
 
       if (!row.custom) {
         const img = document.createElement("img");
+
+        let nameFolder;
+        nameFolder = row.folder ? row.folder : tableData.folder; 
+
         if(size === 'scalable'){
-            img.src = `${tableData.basePath}/${size}/${tableData.folder}/${row.name}.svg`;
+
+            // img.src = `${tableData.basePath}/${size}/${tableData.folder}/${row.name}.svg`;
+            img.src = `${tableData.basePath}/${size}/${nameFolder}/${row.name}.svg`;
             img.alt = row.name;
             td.appendChild(img);
+
         } else{
-          let nameFolder;
-          nameFolder = row.folder ? row.folder : tableData.folder; 
-
-            
-
           if( size === 256 && row.sizesX256 === 'none' ){
             console.log(row.sizesX256)
           } else {
@@ -69,11 +71,11 @@ export function createTable(tableData) {
         }
         
 
-      } else if (row.name === "avatar-default-symbolic") {
+      } else if (row.name === "avatar-default-symbolic" || row.name === "go-previous-symbolic") {
         // спец. случай
             if(size === 256){
                 const img = document.createElement("img");
-                img.src = `${tableData.basePath}/scalable/status/${row.name}.svg`;
+                img.src = `${tableData.basePath}/scalable/${row.folder}/${row.name}.svg`;
                 img.width = 256;
                 img.height = 256;
                 img.alt = row.name;
