@@ -11,7 +11,13 @@ export const tablesData = [
       { iconName: "OBJECT_CATEGORY_OU", name: "folder-documents" },
       { iconName: "OBJECT_CATEGORY_GROUP", name: "system-users" },
       { iconName: "OBJECT_CATEGORY_PERSON", name: "avatar-default" },
-      { iconName: "OBJECT_CATEGORY_PERSON", name: "avatar-default-symbolic", custom: true }
+      { iconName: "OBJECT_CATEGORY_PERSON", name: "avatar-default-symbolic", custom: true },
+      { iconName: "OBJECT_CATEGORY_COMPUTER", name: "computer" },
+      { iconName: "OBJECT_CATEGORY_GP_CONTAINER", name: "preferences-other", folder: "categories", sizesX256: 'none' },
+      { iconName: "OBJECT_CATEGORY_VOLUME", name: "folder-templates" },
+      { iconName: "OBJECT_CATEGORY_SERVERS_CONTAINER", name: "folder" },
+      { iconName: "OBJECT_CATEGORY_SITE", name: "go-home",  folder: "actions", sizesX256: 'none' },
+      
     ]
   },
   {

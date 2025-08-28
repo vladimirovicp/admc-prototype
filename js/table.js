@@ -48,12 +48,27 @@ export function createTable(tableData) {
         const img = document.createElement("img");
         if(size === 'scalable'){
             img.src = `${tableData.basePath}/${size}/${tableData.folder}/${row.name}.svg`;
+            img.alt = row.name;
+            td.appendChild(img);
         } else{
-            img.src = `${tableData.basePath}/${size}x${size}/${tableData.folder}/${row.name}.${tableData.type}`;
+          let nameFolder;
+          nameFolder = row.folder ? row.folder : tableData.folder; 
+
+            
+
+          if( size === 256 && row.sizesX256 === 'none' ){
+            console.log(row.sizesX256)
+          } else {
+            img.src = `${tableData.basePath}/${size}x${size}/${nameFolder}/${row.name}.${tableData.type}`;
+            img.alt = row.name;
+            td.appendChild(img);
+          }
+
+
+            // img.src = `${tableData.basePath}/${size}x${size}/${tableData.folder}/${row.name}.${tableData.type}`;
         }
         
-        img.alt = row.name;
-        td.appendChild(img);
+
       } else if (row.name === "avatar-default-symbolic") {
         // спец. случай
             if(size === 256){
