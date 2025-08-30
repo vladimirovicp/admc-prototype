@@ -71,7 +71,13 @@ export function createTable(tableData) {
         }
         
 
-      } else if (row.name === "avatar-default-symbolic" || row.name === "go-previous-symbolic") {
+      } else if (row.name === "avatar-default-symbolic" || 
+                  row.name === "go-previous-symbolic" || 
+                  row.name === "go-next-symbolic" || 
+                  row.name === "go-up-symbolic" || 
+                  row.name === "view-refresh-symbolic" ||
+                  row.name === "emblem-system-symbolic"
+                ) {
         // спец. случай
             if(size === 256){
                 const img = document.createElement("img");

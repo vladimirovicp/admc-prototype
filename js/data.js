@@ -25,6 +25,16 @@ export const tablesData = [
       { iconName: "ADMC_CATEGORY_DOMAIN_INFO_ITEM", name: "network-workgroup" },
       { iconName: "ADMC_CATEGORY_GO_PREVIOUS_ACTION", name: "go-previous", folder: "actions" },
       { iconName: "ADMC_CATEGORY_GO_PREVIOUS_ACTION", name: "go-previous-symbolic",  folder: "actions", custom: true },
+      { iconName: "ADMC_CATEGORY_GO_NEXT_ACTION", name: "go-next", folder: "actions" },
+      { iconName: "ADMC_CATEGORY_GO_NEXT_ACTION", name: "go-next-symbolic",  folder: "actions", custom: true },
+      { iconName: "ADMC_CATEGORY_GO_UP_ACTION", name: "go-up", folder: "actions", sizesX256: 'none' },
+      { iconName: "ADMC_CATEGORY_GO_UP_ACTION", name: "go-up-symbolic",  folder: "actions", custom: true },
+      { iconName: "ADMC_CATEGORY_REFRESH_ACTION", name: "view-refresh", folder: "actions", sizesX256: 'none' },
+      { iconName: "ADMC_CATEGORY_REFRESH_ACTION", name: "view-refresh-symbolic",  folder: "actions", custom: true },
+      { iconName: "ADMC_CATEGORY_MANUAL_ACTION", name: "help", custom: true},
+      { iconName: "OBJECT_CATEGORY_BUILTIN", name: "emblem-system", folder: "emblems", sizesX256: 'none' },
+      { iconName: "OBJECT_CATEGORY_LOST_AND_FOUND", name: "emblem-system", folder: "emblems", sizesX256: 'none' },
+      { iconName: "OBJECT_CATEGORY_LOST_AND_FOUND", name: "emblem-system-symbolic",  folder: "emblems", custom: true },
     ]
   },
   {
