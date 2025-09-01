@@ -61,6 +61,7 @@ export function createTable(tableData) {
           if( (size === 256 && row.sizesX256 === 'none') || 
           (size === 48 && row.sizesX48 === 'none') || 
           (size === 32 && row.sizesX32 === 'none') || 
+          (size === 22 && row.sizesX22 === 'none') || 
           (size === 16 && row.sizesX16 === 'none')){
             console.log(row.sizesX256)
           } else {
