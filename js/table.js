@@ -58,10 +58,20 @@ export function createTable(tableData) {
             td.appendChild(img);
 
         } else{
-          if( size === 256 && row.sizesX256 === 'none' ){
+          if( (size === 256 && row.sizesX256 === 'none') || 
+          (size === 48 && row.sizesX48 === 'none') || 
+          (size === 32 && row.sizesX32 === 'none') || 
+          (size === 16 && row.sizesX16 === 'none')){
             console.log(row.sizesX256)
           } else {
-            img.src = `${tableData.basePath}/${size}x${size}/${nameFolder}/${row.name}.${tableData.type}`;
+
+            const pathSize = tableData.sizeOne ? `${size}` : `${size}x${size}`;
+
+            const mainPath = tableData.pathLink2 ? `${nameFolder}/${pathSize}` : `${pathSize}/${nameFolder}`;
+
+            img.src = `${tableData.basePath}/${mainPath}/${row.name}.${tableData.type}`;
+            img.width = size;
+            img.height = size;
             img.alt = row.name;
             td.appendChild(img);
           }
