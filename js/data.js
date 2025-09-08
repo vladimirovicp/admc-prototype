@@ -27,7 +27,7 @@ export const tablesData = [
       { iconName: "ADMC_CATEGORY_GO_NEXT_ACTION", name: "go-next", folder: "actions", sizesX32: 'none', sizesX48: 'none' },
       { iconName: "ADMC_CATEGORY_GO_UP_ACTION", name: "go-up", folder: "actions", sizesX32: 'none', sizesX48: 'none' },
       { iconName: "ADMC_CATEGORY_REFRESH_ACTION", name: "view-refresh", folder: "actions", sizesX48: 'none' },
-      // { iconName: "ADMC_CATEGORY_MANUAL_ACTION", name: "help", folder: "actions", sizesX32: 'none', sizesX48: 'none'},
+      { iconName: "ADMC_CATEGORY_MANUAL_ACTION", name: "help-contents", folder: "actions", sizesX32: 'none', sizesX48: 'none'},
       // { iconName: "OBJECT_CATEGORY_BUILTIN", name: "emblem-system", folder: "emblems", sizesX256: 'none' },
       // { iconName: "OBJECT_CATEGORY_LOST_AND_FOUND", name: "emblem-system", folder: "emblems", sizesX256: 'none' },
       // { iconName: "OBJECT_CATEGORY_LOST_AND_FOUND", name: "emblem-system-symbolic",  folder: "emblems", custom: true },
