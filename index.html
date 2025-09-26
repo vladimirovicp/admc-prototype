@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Таблица с иконками</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 24px; background: #f7f8fb; }
+    .table-card { background: white; border-radius: 12px; box-shadow: 0 6px 20px rgba(16,24,40,0.08); padding: 18px; max-width: 900px; margin: 0 auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { text-align: left; padding: 10px 12px; font-weight: 600; font-size: 14px; border-bottom: 2px solid #eef1f6; }
+    tbody td { padding: 10px 12px; border-bottom: 1px solid #f1f4f8; font-size: 14px; vertical-align: middle; }
+    tbody > tr {background-color: #e1e1e1;}
+    tbody > tr:nth-of-type(even) {background-color: rgb(237 238 242);}
+    tbody tr:hover td { background: #fbfdff; }
+    .muted { color: #6b7280; font-size: 13px; }
+    .center { text-align: center; width: 80px; }
+    /* img.icon-16 { width:16px; height:16px; }
+    img.icon-24 { width:24px; height:24px; } */
+  </style>
+</head>
+<body>
+
+  <div class="table-card">
+    <h2>Таблица с иконками SVG</h2>
+    <div id="table-container"></div>
+  </div>
+
+  <script>
+    const path16 = "img/main/v1/16/";
+    const path24 = "img/main/v1/24/";
+
+    // Теперь можно задавать "title" для отображения в таблице
+    const data = [
+      { title: "OBJECT_CATEGORY_DOMAIN_DNS", nameImg: "object-category-domain-dns", desc: "Представляет домен DNS в Active Directory. Это корневой объект домена, который содержит все остальные объекты домена. Служит корневым контейнером для всех объектов домена." },
+      { title: "OBJECT_CATEGORY_CONTAINER", nameImg: "object-category-container", desc: "Базовый контейнерный объект в Active Directory. Используется для группировки других объектов без специфической функциональности.Основной тип контейнера для иерархии организации." },
+      { title: "OBJECT_CATEGORY_OU", nameImg: "object-category-ou", desc: "Organizational-Unit. Организационная единица (OU) - специальный тип контейнера для логической организации объектов домена по отделам, географическим расположениям или другим критериям. Используется для групповых политик и делегирования управления." },
+      { title: "", nameImg: "object-category-ou-create", desc: "" },
+      { title: "OBJECT_CATEGORY_GROUP", nameImg: "object-category-group", desc: "Группа безопасности или группа рассылки в Active Directory. Используется для управления правами доступа и рассылкой сообщений. Используется для управления правами." },
+      { title: "", nameImg: "object-category-person-create", desc: "" },
+      { title: "OBJECT_CATEGORY_PERSON", nameImg: "object-category-person", desc: "Базовый класс для объектов, представляющих людей (пользователи, контакты). Является родительским классом для user и contact. Базовый тип для всех объектов, представляющих людей." },
+      { title: "", nameImg: "object-category-person-create", desc: "" },
+      { title: "OBJECT_CATEGORY_COMPUTER", nameImg: "object-category-computer", desc: "Объект компьютера в домене. Представляет компьютеры, присоединенные к домену Active Directory. Используется для управления компьютерами домена." },
+      { title: "OBJECT_CATEGORY_GP_CONTAINER", nameImg: "object-category-gp-container", desc: "Контейнер групповой политики (GPO). Содержит объекты групповых политик, которые применяются к пользователям и компьютерам. Используется для управления групповыми политиками." },
+      { title: "", nameImg: "object-category-gp-container1", desc: "" },
+      { title: "", nameImg: "object-category-gp-container2", desc: "" },
+      { title: "OBJECT_CATEGORY_VOLUME", nameImg: "object-category-volume", desc: "Объект томов/общих папок. Представляет сетевые ресурсы и общие папки в Active Directory. Используется для управления сетевыми ресурсами." },
+      { title: "OBJECT_CATEGORY_SERVERS_CONTAINER", nameImg: "object-category-servers-container", desc: "Системный контейнер серверов. Содержит объекты серверов домена и контроллеров домена. Содержит информацию о серверах домена." },
+      { title: "OBJECT_CATEGORY_SITE", nameImg: "object-category-site", desc: "Объект сайта Active Directory. Представляет физическое расположение с контроллерами домена в одной подсети. Используется для управления топологией репликации." },
+      { title: "", nameImg: "object-category-site-2", desc: "" },
+      { title: "ADMC_CATEGORY_QUERY_ITEM", nameImg: "admc-category-query-item", desc: "Представляет отдельный элемент запроса в консоли ADMC. Используется для отображения результатов поиска или сохраненных запросов к Active Directory. Используется в QueryItemImpl для представления результатов запросов. Представляет папку с запросами в консоли ADMC. Содержит сохраненные запросы и позволяет организовывать их в иерархическую структуру. Используется в QueryFolderImpl для группировки запросов" },
+      { title: "ADMC_CATEGORY_QUERY_FOLDER", nameImg: "admc-category-query-folder", desc: "Представляет папку с запросами в консоли ADMC. Содержит сохраненные запросы и позволяет организовывать их в иерархическую структуру. Используется в QueryFolderImpl для группировки запросов. Переменные для групповых политик" },
+      { title: "ADMC_CATEGORY_ALL_POLICIES_FOLDER", nameImg: "admc_category_all_policies_folder", desc: "Специальная папка, содержащая все групповые политики домена. Позволяет просматривать и управлять всеми GPO в одном месте. Используется в AllPoliciesFolderImpl для отображения всех политик" },
+      { title: "ADMC_CATEGORY_GP_OBJECTS", nameImg: "", desc: "Категория для объектов групповых политик. Используется для группировки и отображения элементов, связанных с групповыми политиками. Используется для организации объектов групповых политик. Переменные для FSMO ролей" },
+      { title: "ADMC_CATEGORY_FSMO_ROLE_CONTAINER", nameImg: "admc-category-fsmo-role-container", desc: "Контейнер для FSMO ролей (Flexible Single Master Operations). Содержит информацию о том, какие контроллеры домена выполняют различные мастер-роли. Используется в DomainInfoResultsWidget для группировки FSMO ролей." },
+      { title: "ADMC_CATEGORY_FSMO_ROLE", nameImg: "admc-category-fsmo-role", desc: "Отдельная FSMO роль (например, Schema Master, Domain Naming Master, RID Master, PDC Emulator, Infrastructure Master). Используется для отображения конкретных FSMO ролей в интерфейсе. Переменная для информации о домене" },
+      { title: "ADMC_CATEGORY_DOMAIN_INFO_ITEM", nameImg: "admc-category-domain-info-item", desc: "Элемент информации о домене. Отображает основную информацию о подключенном домене Active Directory. Используется в DomainInfoImpl для отображения информации о домене." },
+      { title: "ADMC_CATEGORY_GO_PREVIOUS_ACTION", nameImg: "admc-category-go-previous-action", desc: "Действие навигации 'Назад'. Позволяет вернуться к предыдущему элементу в истории навигации." },
+      { title: "ADMC_CATEGORY_GO_NEXT_ACTION", nameImg: "admc-category-go-next-action", desc: "Действие навигации 'Вперед'. Позволяет перейти к следующему элементу в истории навигации." },
+      { title: "ADMC_CATEGORY_GO_UP_ACTION", nameImg: "admc-category-go-up-action", desc: "Действие навигации 'Вверх'. Позволяет перейти к родительскому элементу в иерархии." },
+      { title: "ADMC_CATEGORY_REFRESH_ACTION", nameImg: "admc-category-refresh-action", desc: "Действие обновления. Позволяет обновить текущий вид и получить актуальные данные из Active Directory." },
+      { title: "ADMC_CATEGORY_MANUAL_ACTION", nameImg: "admc-category-manual-action", desc: "Действие справки/руководства. Открывает документацию или справочную информацию о приложении." },
+      { title: "OBJECT_CATEGORY_BUILTIN", nameImg: "object-category-builtin", desc: "Представляет встроенный домен (Builtin Domain) в Active Directory. Это системный контейнер, который содержит встроенные группы безопасности домена, такие как Administrators, Users, Guests и другие предустановленные группы безопасности. Builtin Domain является частью каждого домена и содержит группы с предустановленными правами доступа. Используется для отображения и управления встроенными группами безопасности домена, которые имеют предустановленные права и не могут быть удалены." },
+      { title: "", nameImg: "object-category-builtin-1", desc: "" },
+      { title: "", nameImg: "object-category-builtin-2", desc: "" },
+      { title: "", nameImg: "object-category-builtin-3", desc: "" },
+      { title: "", nameImg: "object-category-builtin-4", desc: "" },
+      { title: "OBJECT_CATEGORY_LOST_AND_FOUND", nameImg: "object-category-lost-and-found", desc: "Представляет контейнер 'Lost and Found' в Active Directory. Это системный контейнер, который автоматически создается в каждом домене и используется для хранения объектов, которые не могут быть корректно размещены в иерархии домена из-за конфликтов или проблем с репликацией. Когда система не может определить правильное местоположение для объекта, он помещается в этот контейнер. Используется для отображения и управления объектами, которые были 'потеряны' системой и требуют ручного размещения в правильной иерархии домена." },
+      { title: "OBJECT_CATEGORY_MSDS_QUOTA_CONTAINER", nameImg: "object-category-msds-quota-container-1", desc: "Представляет контейнер квот Active Directory. Это системный объект, который используется для управления квотами на операции LDAP в домене. Квоты ограничивают количество объектов, которые могут создавать пользователи или группы в определенных частях каталога, что помогает предотвратить злоупотребления и защитить от атак типа DoS. Используется для отображения и управления настройками квот LDAP, которые ограничивают количество операций, которые могут выполнять пользователи в Active Directory." },
+      { title: "", nameImg: "object-category-msds-quota-container-2", desc: "" },
+      { title: "", nameImg: "object-category-msds-quota-container-3", desc: "" },
+      { title: "OBJECT_CATEGORY_PSO", nameImg: "object-category-pso", desc: "Представляет объект настроек паролей (Password Settings Object, PSO) в Active Directory. PSO позволяет применять различные политики паролей к конкретным пользователям или группам, переопределяя глобальные настройки паролей домена. Это особенно полезно для создания исключений из общих правил паролей для административных аккаунтов или сервисных учетных записей. Используется для создания, редактирования и управления индивидуальными настройками паролей для пользователей и групп, включая такие параметры как минимальная длина пароля, сложность, история паролей, блокировка учетных записей и другие." },
+      { title: "OBJECT_CATEGORY_PSO_CONTAINER", nameImg: "object-category-pso-container", desc: "Представляет контейнер для объектов настроек паролей (Password Settings Objects). Это системный контейнер, который автоматически создается в домене и служит родительским контейнером для всех PSO объектов. Контейнер обеспечивает организацию и группировку различных настроек паролей в едином месте. Используется для отображения и управления контейнером, содержащим все PSO объекты домена. В ADMC этот контейнер отображается в дереве консоли и позволяет администраторам создавать новые PSO объекты и управлять существующими настройками паролей." },
+      { title: "", nameImg: "", desc: "" },
+
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+      { title: "", nameImg: "", desc: "" },
+
+
+    ];
+
+    function createTable(dataArray, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const table = document.createElement('table');
+
+      // Заголовки
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      ['Название', '16', '24', 'Описание'].forEach((text, i) => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        if (i === 1 || i === 2) th.classList.add('center');
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      // Тело
+      const tbody = document.createElement('tbody');
+      dataArray.forEach(item => {
+        const tr = document.createElement('tr');
+
+        // Название (title)
+        const tdTitle = document.createElement('td');
+        tdTitle.textContent = item.title ?? item.nameImg;
+        tr.appendChild(tdTitle);
+
+        if(item.nameImg){
+
+          // Иконка 16px
+          const td16 = document.createElement('td');
+          td16.classList.add('center');
+          const img16 = document.createElement('img');
+          img16.src = path16 + item.nameImg + ".svg";
+          img16.alt = item.nameImg + " 16px";
+          img16.className = "icon-16";
+          td16.appendChild(img16);
+          tr.appendChild(td16);
+
+          // Иконка 24px
+          const td24 = document.createElement('td');
+          td24.classList.add('center');
+          const img24 = document.createElement('img');
+          img24.src = path24 + item.nameImg + ".svg";
+          img24.alt = item.nameImg + " 24px";
+          img24.className = "icon-24";
+          td24.appendChild(img24);
+          tr.appendChild(td24);
+        } else {
+          // Иконка 16px
+          const td16 = document.createElement('td');
+          tr.appendChild(td16);
+
+          // Иконка 24px
+          const td24 = document.createElement('td');
+          tr.appendChild(td24);
+        }
+
+
+        // Описание
+        const tdDesc = document.createElement('td');
+        tdDesc.textContent = item.desc ?? '';
+        tdDesc.classList.add('muted');
+        tr.appendChild(tdDesc);
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      container.innerHTML = '';
+      container.appendChild(table);
+    }
+
+    createTable(data, 'table-container');
+  </script>
+</body>
+</html>
